@@ -1,0 +1,34 @@
+# Personal notes
+
+notes/
+
+# Raw bank exports
+
+data/raw/*.csv
+data/raw/**/*.csv
+
+# Processed transaction exports
+
+data/processed/*.csv
+
+# Excel workbooks
+
+*.xlsx
+
+*.xls
+
+# macOS
+
+.DS_Store
+
+# Python
+
+__pycache__/
+
+*.pyc
+
+# Virtual environments
+
+.venv/
+
+venv/
