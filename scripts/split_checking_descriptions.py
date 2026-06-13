@@ -6,12 +6,15 @@ from __future__ import annotations
 import argparse
 import csv
 import re
+from datetime import datetime
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 
 DEFAULT_INPUT = Path("data/raw/checking_all.csv")
 DEFAULT_OUTPUT = Path("data/processed/checking_split.csv")
 DEFAULT_LOOKUP = Path("data/lookups/merchant_lookup.csv")
+DEFAULT_VENMO_DIR = Path("data/raw/imports")
 LOOKUP_FIELDS = ["MATCH_TEXT", "MERCHANT_NORMALIZED", "CATEGORY", "SUBCATEGORY"]
 
 NEW_FIELDS = [
@@ -56,6 +59,8 @@ EDEPOSIT_RE = re.compile(
     r"(?P<time>\d{2}:\d{2}:\d{2}\s+[AP]M)\s+(?P<location>.+?)\s+(?P<region>[A-Z]{2})\s+"
     r"(?P<account>\d{4})$"
 )
+ZELLE_RE = re.compile(r"^ZELLE\s+(?:FROM|TO)\s+.+$")
+ZELLE_PARTY_RE = re.compile(r"^(ZELLE\s+(?P<direction>FROM|TO)\s+(?P<first_name>\S+)).*$")
 MATCH_PROCESSOR_PREFIXES = ("TST*", "SQ *", "PAR*", "HOP*")
 
 
@@ -92,15 +97,31 @@ def split_location(parts: list[str]) -> tuple[str, str, str]:
 
 
 def create_match_text(parsed: dict[str, str]) -> str:
+    if parsed.get("MERCHANT_EXTRACTED", "").startswith("Instant Pmt from VENMO"):
+        return parsed["MERCHANT_EXTRACTED"]
+    if parsed.get("DESCRIPTION_CATEGORY") == "venmo" and parsed.get("ACTION") == "CASHOUT":
+        return "VENMO CASHOUT"
+    if parsed.get("DESCRIPTION_CATEGORY") == "venmo" and parsed.get("MERCHANT_EXTRACTED"):
+        return parsed["MERCHANT_EXTRACTED"]
+
+    if parsed.get("DESCRIPTION_CATEGORY") == "payment" and parsed.get("ACTION"):
+        return " ".join([parsed.get("TRANSACTION_TYPE", ""), parsed.get("ACTION", "")]).strip()
+
     match_text = parsed.get("MERCHANT_EXTRACTED") or parsed.get("TRANSACTION_TYPE", "")
     match_text = " ".join(match_text.split()).strip()
     if not match_text:
         return ""
     if match_text.startswith("HOP*"):
         return "TRIMET"
-    zelle_match = re.match(r"^(ZELLE FROM .+?)\s+ON\s+\d{2}/\d{2}\s+REF\s+#\s+\S+.*$", match_text)
+    zelle_match = re.match(
+        r"^(ZELLE\s+(?:FROM|TO)\s+.+?)\s+ON\s+\d{2}/\d{2}\s+REF\s+#\s+\S+\s*(?P<memo>.*)$",
+        match_text,
+    )
     if zelle_match:
-        return zelle_match.group(1)
+        memo = zelle_match.group("memo").strip()
+        if re.search(r"\bRENT\b", memo, flags=re.IGNORECASE):
+            memo = "RENT"
+        return " ".join(part for part in [zelle_match.group(1), memo] if part)
 
     for prefix in MATCH_PROCESSOR_PREFIXES:
         if match_text.startswith(prefix):
@@ -229,6 +250,20 @@ def parse_instant_payment_description(description: str) -> dict[str, str] | None
     if not match:
         return None
 
+    counterparty = match.group("counterparty").strip()
+    if counterparty == "VENMO":
+        payment_date = match.group("payment_date")
+        parsed = blank_fields()
+        parsed.update(
+            {
+                "DESCRIPTION_CATEGORY": "venmo",
+                "TRANSACTION_TYPE": "VENMO CASHOUT",
+                "MERCHANT_EXTRACTED": f"Instant Pmt from VENMO on {payment_date}",
+                "ACTION": "CASHOUT",
+            }
+        )
+        return parsed
+
     parsed = blank_fields()
     parsed.update(
         {
@@ -251,6 +286,29 @@ def parse_edeposit_description(description: str) -> dict[str, str] | None:
             "TRANSACTION_TYPE": match.group("type"),
             "LOCATION": match.group("location"),
             "REGION": match.group("region"),
+        }
+    )
+    return parsed
+
+
+def parse_zelle_description(description: str) -> dict[str, str] | None:
+    normalized = " ".join(description.split())
+    if not ZELLE_RE.match(normalized):
+        return None
+
+    party_match = ZELLE_PARTY_RE.match(normalized)
+    transaction_type = (
+        f"ZELLE {party_match.group('direction')} {party_match.group('first_name')}"
+        if party_match
+        else normalized
+    )
+
+    parsed = blank_fields()
+    parsed.update(
+        {
+            "DESCRIPTION_CATEGORY": "zelle",
+            "TRANSACTION_TYPE": transaction_type,
+            "MERCHANT_EXTRACTED": normalized,
         }
     )
     return parsed
@@ -297,6 +355,7 @@ def parse_description(description: str) -> dict[str, str]:
         parse_transfer_description,
         parse_instant_payment_description,
         parse_edeposit_description,
+        parse_zelle_description,
         parse_double_spaced_payment,
     )
     for parser in parsers:
@@ -317,6 +376,23 @@ def parse_direction(amount: str) -> str:
     if parsed_amount < 0:
         return "withdrawal"
     return ""
+
+
+def parse_bank_date(date: str) -> datetime | None:
+    try:
+        return datetime.strptime(date, "%m/%d/%Y")
+    except ValueError:
+        return None
+
+
+def parse_money(amount: str) -> Decimal | None:
+    cleaned = (amount or "").replace("$", "").replace(",", "").replace(" ", "").strip()
+    if not cleaned:
+        return None
+    try:
+        return Decimal(cleaned)
+    except InvalidOperation:
+        return None
 
 
 def parse_month(date: str) -> str:
@@ -371,6 +447,10 @@ def load_merchant_lookup(lookup_path: Path) -> list[dict[str, str]]:
         return [row for row in reader if row.get("MATCH_TEXT", "").strip()]
 
 
+def clean_lookup_value(row: dict[str, str], field: str) -> str:
+    return (row.get(field) or "").strip()
+
+
 def apply_merchant_lookup(
     parsed: dict[str, str], description: str, lookup_rows: list[dict[str, str]]
 ) -> None:
@@ -378,21 +458,142 @@ def apply_merchant_lookup(
     for lookup_row in lookup_rows:
         match_text = lookup_row["MATCH_TEXT"].strip().casefold()
         if match_text == lookup_text:
-            parsed["MERCHANT_NORMALIZED"] = lookup_row.get("MERCHANT_NORMALIZED", "").strip()
-            parsed["CATEGORY"] = lookup_row.get("CATEGORY", "").strip()
-            parsed["SUBCATEGORY"] = lookup_row.get("SUBCATEGORY", "").strip()
+            parsed["MERCHANT_NORMALIZED"] = clean_lookup_value(lookup_row, "MERCHANT_NORMALIZED")
+            parsed["CATEGORY"] = clean_lookup_value(lookup_row, "CATEGORY")
+            parsed["SUBCATEGORY"] = clean_lookup_value(lookup_row, "SUBCATEGORY")
             return
 
 
-def rebuild_merchant_lookup(input_path: Path, lookup_path: Path) -> tuple[int, int]:
+def read_venmo_statement(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="") as venmo_file:
+        rows = list(csv.reader(venmo_file))
+
+    header_index = None
+    for index, row in enumerate(rows):
+        if "ID" in row and "Datetime" in row and "Amount (total)" in row:
+            header_index = index
+            break
+
+    if header_index is None:
+        return []
+
+    headers = rows[header_index]
+    entries = []
+    for row in rows[header_index + 1 :]:
+        if len(row) < len(headers):
+            row = row + [""] * (len(headers) - len(row))
+        record = dict(zip(headers, row))
+        if not record.get("ID") or not record.get("Datetime") or not record.get("Amount (total)"):
+            continue
+        entries.append(record)
+    return entries
+
+
+def load_venmo_entries(venmo_dir: Path) -> list[dict[str, str]]:
+    if not venmo_dir.exists():
+        return []
+
+    entries = []
+    for path in sorted(venmo_dir.glob("VenmoStatement_*.csv")):
+        entries.extend(read_venmo_statement(path))
+    return entries
+
+
+def venmo_entry_date(entry: dict[str, str]) -> datetime | None:
+    try:
+        return datetime.fromisoformat(entry["Datetime"])
+    except ValueError:
+        return None
+
+
+def venmo_entry_amount(entry: dict[str, str]) -> Decimal | None:
+    return parse_money(entry.get("Amount (total)", ""))
+
+
+def venmo_counterparty(entry: dict[str, str]) -> str:
+    names = [entry.get("From", "").strip(), entry.get("To", "").strip()]
+    for name in names:
+        if name and name.casefold() != "miles whitaker":
+            return name
+    return next((name for name in names if name), "")
+
+
+def format_venmo_match_text(entry: dict[str, str], action: str) -> str:
+    note = " ".join(entry.get("Note", "").split()).strip()
+    counterparty = venmo_counterparty(entry)
+    entry_type = entry.get("Type", "").strip().upper()
+
+    if action == "CASHOUT" or entry_type == "STANDARD TRANSFER":
+        return "VENMO CASHOUT"
+
+    parts = ["VENMO", action or entry_type]
+    if counterparty:
+        parts.append(counterparty.upper())
+    if note:
+        parts.append(note.upper())
+    return " ".join(parts)
+
+
+def find_matching_venmo_entry(
+    row: dict[str, str], parsed: dict[str, str], venmo_entries: list[dict[str, str]]
+) -> dict[str, str] | None:
+    if parsed.get("TRANSACTION_TYPE") != "VENMO":
+        return None
+
+    bank_date = parse_bank_date(row.get("DATE", ""))
+    bank_amount = parse_money(row.get("AMOUNT", ""))
+    if bank_date is None or bank_amount is None:
+        return None
+
+    action = parsed.get("ACTION", "")
+    candidates = []
+    for entry in venmo_entries:
+        entry_date = venmo_entry_date(entry)
+        entry_amount = venmo_entry_amount(entry)
+        if entry_date is None or entry_amount is None:
+            continue
+
+        day_delta = (bank_date.date() - entry_date.date()).days
+        if action == "CASHOUT":
+            if entry.get("Type") != "Standard Transfer":
+                continue
+            expected_bank_amount = -entry_amount
+            if expected_bank_amount == bank_amount and 0 <= day_delta <= 5:
+                candidates.append((day_delta, entry))
+        elif action == "PAYMENT":
+            if entry_amount == bank_amount and 0 <= day_delta <= 3:
+                candidates.append((day_delta, entry))
+
+    if not candidates:
+        return None
+    return sorted(candidates, key=lambda candidate: candidate[0])[0][1]
+
+
+def apply_venmo_enrichment(
+    row: dict[str, str], parsed: dict[str, str], venmo_entries: list[dict[str, str]]
+) -> None:
+    entry = find_matching_venmo_entry(row, parsed, venmo_entries)
+    if entry is None:
+        return
+
+    action = parsed.get("ACTION", "")
+    parsed["DESCRIPTION_CATEGORY"] = "venmo"
+    parsed["TRANSACTION_TYPE"] = f"VENMO {action}" if action else "VENMO"
+    parsed["MERCHANT_EXTRACTED"] = format_venmo_match_text(entry, action)
+
+
+def rebuild_merchant_lookup(
+    input_path: Path, lookup_path: Path, venmo_entries: list[dict[str, str]] | None = None
+) -> tuple[int, int]:
+    venmo_entries = venmo_entries or []
     existing_lookup_rows = load_merchant_lookup(lookup_path)
     existing_by_match = {}
     for row in existing_lookup_rows:
         match_text = row["MATCH_TEXT"].strip()
         values = {
-            "MERCHANT_NORMALIZED": row.get("MERCHANT_NORMALIZED", "").strip(),
-            "CATEGORY": row.get("CATEGORY", "").strip(),
-            "SUBCATEGORY": row.get("SUBCATEGORY", "").strip(),
+            "MERCHANT_NORMALIZED": clean_lookup_value(row, "MERCHANT_NORMALIZED"),
+            "CATEGORY": clean_lookup_value(row, "CATEGORY"),
+            "SUBCATEGORY": clean_lookup_value(row, "SUBCATEGORY"),
         }
         if any(values.values()) and match_text.casefold() not in existing_by_match:
             existing_by_match[match_text.casefold()] = values
@@ -405,6 +606,7 @@ def rebuild_merchant_lookup(input_path: Path, lookup_path: Path) -> tuple[int, i
         rows_by_match = {}
         for row in reader:
             parsed = parse_description(row.get("DESCRIPTION", ""))
+            apply_venmo_enrichment(row, parsed, venmo_entries)
             match_text = create_match_text(parsed)
             if not match_text:
                 continue
@@ -435,9 +637,14 @@ def rebuild_merchant_lookup(input_path: Path, lookup_path: Path) -> tuple[int, i
 
 
 def split_checking_csv(
-    input_path: Path, output_path: Path, lookup_path: Path, keep_description: bool
+    input_path: Path,
+    output_path: Path,
+    lookup_path: Path,
+    keep_description: bool,
+    venmo_entries: list[dict[str, str]] | None = None,
 ) -> None:
     lookup_rows = load_merchant_lookup(lookup_path)
+    venmo_entries = venmo_entries or []
 
     with input_path.open(newline="") as input_file:
         reader = csv.DictReader(input_file)
@@ -467,6 +674,7 @@ def split_checking_csv(
             for row in reader:
                 description = row.get("DESCRIPTION", "")
                 parsed = parse_description(description)
+                apply_venmo_enrichment(row, parsed, venmo_entries)
                 parsed["MONTH"] = parse_month(row.get("DATE", ""))
                 parsed["YEAR"] = parse_year(row.get("DATE", ""))
                 parsed["DIRECTION"] = parse_direction(row.get("AMOUNT", ""))
@@ -487,6 +695,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT, help=f"default: {DEFAULT_INPUT}")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help=f"default: {DEFAULT_OUTPUT}")
     parser.add_argument("--lookup", type=Path, default=DEFAULT_LOOKUP, help=f"default: {DEFAULT_LOOKUP}")
+    parser.add_argument("--venmo-dir", type=Path, default=DEFAULT_VENMO_DIR, help=f"default: {DEFAULT_VENMO_DIR}")
     parser.add_argument(
         "--keep-description",
         action="store_true",
@@ -497,7 +706,8 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    split_checking_csv(args.input, args.output, args.lookup, args.keep_description)
+    venmo_entries = load_venmo_entries(args.venmo_dir)
+    split_checking_csv(args.input, args.output, args.lookup, args.keep_description, venmo_entries)
     print(f"Wrote split checking CSV to {args.output}")
 
 

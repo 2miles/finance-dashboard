@@ -1,79 +1,79 @@
 MATCH_TEXT,MERCHANT_NORMALIZED,CATEGORY,SUBCATEGORY
 0792-POOR YOUR NW,,Unknown,
 28TH FOOD MART,28th Food Mart,Restaurants,Snacks
-2LEVY AT OMZ,,,
+2LEVY AT OMZ,,Resturants,Snacks
 2ND STREET HAWTHOR,2nd Street Clothing,Shopping,Clothing
-7-ELEVEN,,,
+7-ELEVEN,7-Eleven,Restaurants,Snacks
 AIRVPN.ORG,AirVPN,Subscriptions,VPN
-ALADDIN GYRO RESTA,,,
-ALEFIRE,,,
+ALADDIN GYRO RESTA,Aladdin Gyro Restaurant,Restaurants,
+ALEFIRE,Alefire,Groceries,Hot Sauce
 ALPHABET BURGE,Alphabet Burger,Restaurants,Burgers
-AMAZON MKTPL*Z89F2,,,
-Amazon Prime,,,
-AMAZON RETA* BD4Z3,,,
-AMTRAK F&B SPINE,,,
-AN XUYEN BAKERY,,,
+AMAZON MKTPL*Z89F2,Amazon,Shopping,Online Retail
+Amazon Prime,Amazon Prime,Subscriptions,
+AMAZON RETA* BD4Z3,Amazon,Shopping,Online Retail
+AMTRAK F&B SPINE,Amtrak,Transportation,Train
+AN XUYEN BAKERY,An Xuyen Bakery,Restaurants,
 APF*23rd Avenue Pr,23rd Avenue Properties,Rent,
 APPLE.COM/BILL,Apple,Subscriptions,
 ARBYS,Arby's,Restaurants,Fast Food
-ARCO#83355BELMO,,,
-ART SUPPLY CEN,,,
+ARCO#83355BELMO,Arco,Transportation,Gas
+ART SUPPLY CEN,Art Supply Center,Shopping,Art Supplies
 ARTESANIAIGUANASPO,Artesania Iguana,Shopping,Clothing
-ASTRO,,,
+ASTRO,Astro,Transportation,Gas
 ATE-OH-ATE - B,Ate-Oh-Ate,Restaurants,Hawaiian
-ATLAS PIZZA KILLIN,,,
+ATLAS PIZZA KILLIN,Atlas Pizza,Restaurants,Pizza
 BABY DOLL PIZZ,Baby Doll Pizza,Restaurants,Pizza
 BANWAIT OIL LLC,,Transportation,Gas
 BASKIN,Baskin Robbins,Restaurants,Ice Cream
 BAYFRONT MARKET,Bayfront Market,Restaurants,Snacks
-BAYSIDE MARKET & DELI,,,
+BAYSIDE MARKET & DELI,Bayside Market & Deli,Restaurants,Snacks
 BEAUMONT DO IT BES,Do It Best Hardware,Shopping,Home Improvement
-BELMONT 34 GRO,,,
-BEST BAGUETTE,,,
+BELMONT 34 GRO,Belmont 34 Grocer,Restaurants,Snacks
+BEST BAGUETTE,Best Baguette,Restaurants,
 BEST BUY,Best Buy,Shopping,Electronics
 BEULAHLAND,Beulahland,Restaurants,Alcohol
 BLACK CAT LLC,Black Cat,Restaurants,Coffee
-BLICK ART 800,,,
+BLICK ART 800,Blick Art,Shopping,Art Supplies
 BRICKS & MINIFIGS,Bricks & Minifigs,Shopping,Lego
 BURGER KING,Burger King,Restaurants,Fast Food
 BURGERVILLE,Burgerville,Restaurants,Fast Food
-BYT SOUND TRANSIT,,,
-BYT*KING COUNTY ME,,,
-CAFE SOLSTICE,,,
-CAFE YUMM,,,
+BYT SOUND TRANSIT,Seattle Transit,Transportation,Public Transit
+BYT*KING COUNTY ME,Seattle Transit,Transportation,Public Transit
+CAFE SOLSTICE,Cafe Solstice,Restaurants,Coffee
+CAFE YUMM,Cafe Yumm,Restaurants,
 CENTER MARKET,Barts Market,Restaurants,Snacks
 CHAMPS BURGER,Champs Burger,Restaurants,Burgers
-CHARLEYS PHILLY ST,,,
-CHEESE & CRACK,,,
+CHARLEYS PHILLY ST,Charleys Cheesesteaks,Restaurants,
+CHEESE & CRACK,Cheese & Crack,Restaurants,
 CHEVRON,Chevron,Transportation,Gas
 CHICK-FIL-A,Chick-fil-A,Restaurants,Fast Food
-CHOPPED CHEESE PDX,,,
+CHOPPED CHEESE PDX,Chopped Cheese PDX,Restaurants,
 CIRCLE K,Circle K,Transportation,Gas
 CITY OF PORTLAND D,City of Portland,Unknown,
-CITY STATE DINER A,,,
+CITY STATE DINER A,City State Diner,Restaurants,
 COIN METER LAUNDRY,Clean Pay,Utilities,Laundry
-COLUMBIA ART AND DRAFT,,,
+COLUMBIA ART AND DRAFT,Columbia Art and Draft,Shopping,Art Supplies
 COMCAST / XFINITY,Xfinity,Utilities,Internet
 COMCAST CABLE COMM,Comcast,Utilities,Internet
-CREEPY'S,,,
+CREEPY'S,Creepy's,Restaurants,Burgers
 CREMA COFFEE,Crema Coffee,Restaurants,Coffee
 DAIRY QUEEN,Dairy Queen,Restaurants,Fast Food
 DAVES HOT CHICKEN,Dave's Hot Chicken,Restaurants,Fast Food
 DEL TACO,Del Taco,Restaurants,Fast Food
-DEPT EDUCATION,,,
-DEQ VIP NE PORTLAN,,,
-DICK'S DRIVE IN BR,,,
-DIVISION PINE,,,
+DEPT EDUCATION,Department of Education,Debt,Student Loan
+DEQ VIP NE PORTLAN,DEQ,Transportation,Vehicle Registration
+DICK'S DRIVE IN BR,Dick's Drive In,Restaurants,Fast Food
+DIVISION PINE,Pine State Biscuits,Restaurants,Breakfast
 DOMINGO'S,Domingo's,Restaurants,Mexican
-DOMINO'S,,,
-DON PEDRO VI,Don Pedro VI,Restaurants,Mexixan
+DOMINO'S,Dominos,Restaurants,Pizza
+DON PEDRO VI,Don Pedro VI,Restaurants,Mexican
 DONNIE VEGAS,Donnie Vegas,Restaurants,Alcohol
 DROPBOX,Dropbox,Subscriptions,Cloud Storage
 eDeposit in Branch,Job Income,Income,Check Deposit
 ELEMENTS MASSAGE,Elements Massage,Shopping,Gifts
 Eweka Internet Ser,Eweka,Subscriptions,Usenet
-FAST TIMES PIZ,,,
-FASTRAK FUEL MAR,,,
+FAST TIMES PIZ,Fast Times Pizza,Restaurants,Pizza
+FASTRAK FUEL MAR,FastRak Fuel Market,Transportation,Gas
 FIVE GUYS - LL,Five Guys,Restaurants,Burgers
 FOOT TRAFFIC NORTH,Foot Traffic,Shopping,Clothing
 FRANKS A LOT,Franks A Lot,Restaurants,Hot Dogs
@@ -82,44 +82,44 @@ FRED-MEYE FRED MEYER 6,Fred Meyer,Groceries,
 FRED-MEYER,Fred Meyer,Groceries,
 FRED-MEYER #0600 FRED MEY PORTLAND,,,
 FREETAXUSA.COM,FreeTaxUSA,Taxes,Tax Prep
-FREETAXUSACOM,,,
+FREETAXUSACOM,FreeTaxUSA,Taxes,Tax Prep
 FRIENDSHIP KIT,Frendship Kitchen,Restaurants,
 FUBONN SUPERMARKET,Fubonn Supermarket,Groceries,
 GEEK-HUB,GeekHub,Unknown,
 GEICO,Geico,Insurance,Auto
 GIRGIS LLC DBA HOOD AVE M GRESHAM,Hood Ave Market,Restaurants,Snacks
-GOODWILL,,,
-GOODWILL OF BROADW,,,
+GOODWILL,Goodwill,Shopping,Thrift Store
+GOODWILL OF BROADW,Goodwill of Broadway,Shopping,Thrift Store
 GOOGLE *YouTubePre,YouTube Premium,Subscriptions,Youtube
 GRENDEL'S COFF,Grendel's Coffee,Restaurants,Coffee
 GRESHAM BURRITO SH,Gresham Burrito,Restaurants,Mexican
 HELLO PHO BANHMI B,Hello Pho,Restaurants,
-HENRY HIGGINS,,,
-HILLSIDE BAR,,,
-HIT THE SPOT,,,
-HOLMAN'S HELLO INN,,,
+HENRY HIGGINS,Henry Higgins,Restaurants,
+HILLSIDE BAR,Hillside Bar,Restaurants,Alcohol
+HIT THE SPOT,Hit the Spot,Restaurants,Burgers
+HOLMAN'S HELLO INN,Holman's Hello Inn,Restaurants,
 HOP FARES VENDING,Trimet,Transportation,Public Transit
-HOP FASTPASS,,,
+HOP FASTPASS,Transit,Transportation,Public Transit
 HUNGRY TIGER,Hungry Tiger,Restaurants,Alcohol
-IN-N-OUT KEIZER,In-N-Out Burger,Restaurants,Fast Food
-Instant Pmt from,Zelle,Reimbursements,
+IN-N-OUT KEIZER,In-N-Out,Restaurants,Fast Food
+Instant Pmt from VENMO on 09/01,Rent,,
 INTERNATIONAL PURCHASE TRANSACTION FEE,International Transaction Fee,Fees,
-IPVANISH,,,
+IPVANISH,IPVanish,Subscriptions,VPN
 IPVanish VPN,IPVanish,Subscriptions,VPN
 IRS,IRS,Income,Tax Refund
 J AND T MARKET AND DELI,J and T Market and Deli,Restaurants,Snacks
 JACK IN THE BOX,Jack in the Box,Restaurants,Fast Food
 JERSEY MIKES,Jersey Mikes,Restaurants,Sandwiches
 JM BANH MI,JM Banh Mi,Restaurants,Vietnamese
-JOJO,,,
-KARKI LLC,,,
+JOJO,Jojo's,Restaurants,Burgers
+KARKI LLC,Karki,Transportation,Gas
 KATIE OBRIENS REST,Katie O'Brien's,Restaurants,Alcohol
 KILLER BURGER,Killer Burger,Restaurants,Burgers
 LA CUCHARA,La Cucharita,Restaurants,Mexican
 LAUGHING PLANET CA,Laughing Planet,Restaurants,
-LIBERTY MUTUAL,Liberty Mutual,Insurance,Renters
+LIBERTY MUTUAL PAYMENT,,,
 LO?S BURGERS,Los Burgers,Restaurants,Burgers
-MAD HANNA,,,
+MAD HANNA,Mad Hanna,Restaurants,Alcohol
 MCDONALD'S,McDonald's,Restaurants,Fast Food
 MIDCITY SMASHE,Midcity Smash,Restaurants,Burgers
 MIKES DRIVE IN,Mikes Drive In,Restaurants,Burgers
@@ -130,61 +130,61 @@ MY FATHERS PLACE,My Fathers Place,Restaurants,
 NEW SEASONS MARKET,New Seasons Market,Groceries,
 NON-WELLS FARGO ATM TRANSACTION FEE,Transaction Fee,Fees,
 NON-WF ATM WITHDRAWAL,Transaction Fee,Fees,
-NORTHWEST COMPOUNDERS,Northwest Compounders,Medical,Tea
-OBSIDIAN,,,
+NORTHWEST COMPOUNDERS,Northwest Compounders,Tea,Medicine
+OBSIDIAN,Obsidian,subscriptions,
 OLD TOWN MUSIC,Old Town Music,Shopping,Music
-OMART,,,
+OMART,O-Mart,Restaurants,Snacks
 ONLINE TRANSFER FROM,Internal Transfer,Transfers,Savings to Checking
 OPENAI,ChatGPT,Subscriptions,AI
 OPENAI *CHATGPT SU,ChatGPT,Subscriptions,AI
 OR LIQUOR STORE,Or Liquor Store,Groceries,Alcohol
 OR REVENUE DEPT,Oregon Department of Revenue,Income,Tax Refund
-OREGON JUDICIAL DE,,,
-OREGON ZOO ECOMMER,,,
+OREGON JUDICIAL DE,Oregon Judicial Department,Transfer,Parking Ticket
+OREGON ZOO ECOMMER,Oregon Zoo,Recreation,Zoo
 OXXO VIEJO VALLART,Oxxo,Resturants,Snacks
 PAYDIRT,Paydirt,Restaurants,Alcohol
-PAYPAL,,,
 PAYPAL *AIRVPNDIPA,AirVPN,Subscriptions,VPN
-PAYPAL *GEEKHUBPTY,,,
+PAYPAL *GEEKHUBPTY,GeekHub,,
 PAYPAL *GOG,GOG,Shopping,Video Games
 PAYPAL *KIM C PLAT,,,
-PAYPAL *STEAM GAME,,,
+PAYPAL *STEAM GAME,Steam,Shopping,Video Games
+PAYPAL TRANSFER,DataAnnotation,Income,Contract Work
 PEET'S,Peet's,Restaurants,Coffee
-PENNY MARKET,,,
-PETS ON BROADWAY,,,
+PENNY MARKET,Penny Market,Restaurants,Snacks
+PETS ON BROADWAY,Pets on Broadway,Tea,Pet Supplies
 PHO HUNG,Pho Hung,Restaurants,
 PILOT,Pilot,Transportation,Gas
-PITMAN RESTARAUNT,,,
-PIZZA JERK,,,
+PITMAN RESTARAUNT,Pitman Restaurant Equipment,Shopping,Home Goods
+PIZZA JERK,Pizza Jerk,Restaurants,Pizza
 PLAID PANTRY,Plaid Pantry,Restaurants,Snacks
 Popeyes,Popeyes,Restaurants,Fast Food
-PORKBUN.COM,,,
+PORKBUN.COM,Porkbun,Subscriptions,Domain Registration
 PORTLAND GENERAL E,PGE,Utilities,Electricity
 PORTLAND TACOVORE,Tacovore,Restaurants,Mexican
 POTATO CHAMPIO,Potato Champion,Restaurants,
-PSU CASHIERS OFFCE,,,
+PSU CASHIERS OFFCE,PSU Cashiers Office,,
 PUFF COFFEE,Puff Coffee,Restaurants,Coffee
 PY *2 KIDS CANDY S,2 Kids Candy Store,Restaurants,Snacks
 PY *COUSINS MAINE,Cousins Maine Lobster,Restaurants,Seafood
-QFC #5205 5544 E BURNSIDE PORTLAND,,,
+QFC #5205 5544 E BURNSIDE PORTLAND,QFC,Groceries,
 RAILWAY,Railway,Subscriptions,Cloud Computing
 RANCH MONTAVIL,Ranch,Restaurants,Pizza
-RANCH PIZZA NO,,,
+RANCH PIZZA NO,Ranch,Restaurants,Pizza
 RANGOON BISTRO,Rangoon Bistro,Restaurants,
 RECURRING TRANSFER TO,Internal Transfer,Transfers,Checking to Savings
 ROCKET,Rocket,Unknown,
-RONTOM'S,,,
+RONTOM'S,Rontom's,Restaurants,Alcohol
 SAFEWAY,Safeway,Groceries,
-SALT & STRAW,,,
+SALT & STRAW,Salt and Straw,Restaurants,Ice Cream
 SALT AND STRA,Salt and Straw,Restaurants,Ice Cream
 SANDY HUT,Sandy Hut,Restaurants,Alcohol
-SEASWEETS POKE,,,
+SEASWEETS POKE,Seasweets,Restaurants,Poke
 SHAK QUICK STOP MARKET LL HILLSBORO,Quick Stop Market,Restaurants,Snacks
-SHAKE SHACK,,,
-SHALOM YALL,,,
+SHAKE SHACK,Shake Shack,Restaurants,Burgers
+SHALOM YALL,Shalom Yall,Restaurants,
 SHANDONG RESTAURAN,Shandong,Restaurants,Chineese
 SHELL OIL,Shell,Transportation,Gas
-SHELL OIL100060640,,,
+SHELL OIL100060640,Shell,Transportation,Gas
 SHELL SERVICE STATION,Shell,Transportation,Gas
 SHOCKBYTE,Shockbyte,Subscriptions,Minecraft Hosting
 "SINCERELY, BAG",Sincerely Bagel,Restaurants,Bagels
@@ -192,38 +192,50 @@ SIZZLE PIE,Sizzle Pie,Restaurants,Pizza
 SLOW HASTE,Slow Haste,Restaurants,Coffee
 SNAPPY'S,Snappy's,Restaurants,Sandwiches
 SPO*CHIMCKING-PORT,Chimcking,Restaurants,
-SPO*ELJARRITOTAQUE,,,
-Square Inc,Basilisk,Income,Paycheck
+SPO*ELJARRITOTAQUE,El Jarrito Taqueria,Restaurants,Mexican
+Square Inc PAYROLL,Basilisk,Income,Work
 STARBUCKS,Starbucks,Restaurants,Coffee
 STEAMGAMES.COM,Steam,Shopping,Video Games
-STRAIGHT FROM NY P,,,
+STRAIGHT FROM NY P,Straight from NY Pizza,Restaurants,Pizza
 SURE SHOT,Sure Shot,Restaurants,Burgers
 TACO BELL,Taco Bell,Restaurants,Fast Food
 TAQUERIA RICO,Taqueria Rico Taco,Restaurants,Mexican
 TAQUERIA SANTA,Taqueria Santa Cruz,Restaurants,Mexican
 TASTES ON THE,Tastes on the ?,Restaurants,
 THAI CHAMPA,Thai Champass,Restaurants,Thai
-The Community Cycling Cen Portland,,,
-THE FIRKIN TAV,,,
+The Community Cycling Cen Portland,The Community Cycling Center,Transportation,Biking
+THE FIRKIN TAV,The Firkin Tavern,Restaurants,Alcohol
 THE HOME DEPOT,The Home Depot,Shopping,Hardware
-THE NEST LOUNGE,,,
+THE NEST LOUNGE,The Nest Lounge,Restaurants,Alcohol
 THE VERN,The Vern,Restaurants,Alcohol
-TILLAMOOK COUNTY I,,,
+TILLAMOOK COUNTY I,Tillamook County Ice Cream,Restaurants,Ice Cream
 TOP MARKET,Top Market,Restaurants,Snacks
 TRIMET,Trimet,Transportation,Public Transit
 TRIPLE NICKEL PUB,Triple Nickel,Restaurants,Alcohol
 UEP*SUSHI OHANA IN,Sushi Ohana,Restaurants,Sushi
 US BLM NW OREGON V,State Park,Transportation,Parking
-US MARKET,,,
-VENMO,Venmo,,
-VOODOO DOUGHNU,,,
+US MARKET,US Market,Restaurants,Snacks
+VENMO CASHOUT,Venmo,Transfers,Venmo Cashout
+VENMO PAYMENT,Venmo,Reimbursements,Venmo Payment
+VENMO PAYMENT CHRISTINA GODINEZ APRIL GROCERIES,Groceries,Groceries,
+"VENMO PAYMENT CHRISTINA GODINEZ FEB 2026- GROCERIES, MCDONALD’S, KACHKA",,Misc. Food,
+VENMO PAYMENT CHRISTINA GODINEZ FIVE GUYS,Five Guys,Restaurants,Burgers
+VENMO PAYMENT CHRISTINA GODINEZ IN N OUT 4/18,In N Out,Restaurants,Fast Food
+VENMO PAYMENT CHRISTINA GODINEZ MARCH 2026 GROCERIES,Groceries,Groceries,
+VENMO PAYMENT CHRISTINA GODINEZ PAMBICHE 2/28 & MCDONALD’S 3/5,Pambiche,Restaurants,Cuban
+VENMO PAYMENT CHRISTINA GODINEZ THAI CHAMPA 4/25,Thai Champa,Restaurants,Thai
+VENMO PAYMENT IVAN DILLINGHAM HOODIES,At Peace Hoodies,Shopping,Clothing
+VENMO PAYMENT KEN PADILLA DOG,Hot Dog Stand,Restaurants,Hot Dogs
+VENMO PAYMENT OLE OLE 💸 TO OLE OLE,Ole Ole,Restaurants,Mexican
+VOODOO DOUGHNU,Voodoo Doughnut,Restaurants,Doughnuts
 WALGREENS STORE 4325 SE 8 PORTLAND,Walgreens,Groceries,
-WENDY'S -1508,,,
+WENDY'S -1508,Wendy's,Restaurants,Fast Food
 WHOLEFDS LLH 104 2825 E B PORTLAND,Whole Foods,Groceries,
 WL *STEAM PURCHASE,Steam,Shopping,Video Games
 WOLFS HEAD,Wolfs Head,Restaurants,Burgers
 WORKERS TAP,Workers Tap,Restaurants,Coffee
-WWW.THECINEMAGICTH,,,
-ZELLE FROM CHRISTINA M GODINEZ,,,
-ZELLE TO,,,
+WWW.THECINEMAGICTH,CineMagic,Recreation,Movies
+ZELLE FROM CHRISTINA M GODINEZ RENT,Zelle from Christina,Rent,
+ZELLE FROM CHRISTINA M GODINEZ TEST,Zelle From Christina,,
+ZELLE TO CHRISTINA GODINEZ SEATTLE TRIP,Seattle Trip,Travel,Seattle Trip
 ZUMIEZ,Zumies,Shopping,Clothing

@@ -6,6 +6,7 @@ This repo turns Wells Fargo checking CSV exports into a cleaner transaction CSV 
 
 - `data/raw/imports/`: drop new Wells Fargo checking CSV exports here.
 - `data/raw/checking_all.csv`: canonical merged raw checking export.
+- `data/raw/venmo_all.csv`: canonical merged Venmo statement rows.
 - `data/lookups/merchant_lookup.csv`: editable merchant/category lookup table.
 - `data/processed/checking_split.csv`: cleaned output for Excel.
 
@@ -14,8 +15,9 @@ The raw bank exports and processed CSV files are ignored by git.
 ## Normal Update Flow
 
 1. Download a new Wells Fargo checking CSV export.
-2. Put it in `data/raw/imports/`.
-3. Run:
+2. Optional: download Venmo statement CSVs for any periods where Venmo detail matters.
+3. Put the Wells Fargo and Venmo CSVs in `data/raw/imports/`.
+4. Run:
 
 ```bash
 python3 scripts/update_checking_data.py
@@ -24,9 +26,13 @@ python3 scripts/update_checking_data.py
 That script will:
 
 - read every `*.csv` in `data/raw/imports/`
+- use only `Wells_Fargo_checking_*.csv` files as bank imports
+- read `VenmoStatement_*.csv` files as Venmo detail imports
 - merge them into `data/raw/checking_all.csv`
+- merge Venmo rows into `data/raw/venmo_all.csv`
 - deduplicate transactions using `DATE`, `DESCRIPTION`, `AMOUNT`, `CHECK #`, and `STATUS`
 - sort transactions newest first
+- enrich matched Wells Fargo `VENMO` rows with Venmo notes/counterparties
 - rebuild `data/lookups/merchant_lookup.csv`
 - preserve existing `MERCHANT_NORMALIZED`, `CATEGORY`, and `SUBCATEGORY` values
 - add blank lookup rows for new `MATCH_TEXT` values
@@ -85,6 +91,11 @@ Current cleanup examples:
 - `FRED-MEYER #0600 3030 NE` -> `FRED-MEYER`
 - `MCDONALD'S F7789` -> `MCDONALD'S`
 - `STARBUCKS STORE 00` -> `STARBUCKS`
+
+Venmo rows are enriched when matching Venmo statements are present:
+
+- bank row `VENMO PAYMENT` + Venmo note `april groceries` -> `VENMO PAYMENT CHRISTINA GODINEZ APRIL GROCERIES`
+- bank row `VENMO CASHOUT` + Venmo standard transfer -> `VENMO CASHOUT`
 
 Human decisions like `OPENAI *CHATGPT SU` -> `ChatGPT` belong in `merchant_lookup.csv`, not parser logic.
 
