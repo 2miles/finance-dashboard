@@ -6,6 +6,8 @@ notes/
 
 data/raw/*.csv
 data/raw/**/*.csv
+data/raw/*.pdf
+data/raw/**/*.pdf
 
 # Processed transaction exports
 
